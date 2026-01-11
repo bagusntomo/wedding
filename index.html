@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Undangan Pernikahan</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Playfair Display', serif; }
+    .petal {
+      position: fixed;
+      top: -10%;
+      animation: fall linear infinite;
+      opacity: 0.8;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(120vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-rose-50 text-gray-800 overflow-x-hidden">
+
+<!-- 🌸 COVER -->
+<section id="cover" class="min-h-screen flex items-center justify-center bg-rose-100 text-center px-6">
+  <div>
+    <p class="text-lg mb-4">Undangan Pernikahan</p>
+    <h1 class="text-4xl md:text-5xl font-semibold mb-6">
+      Ahmad & Aisyah
+    </h1>
+    <button onclick="openInvitation()" class="px-6 py-3 bg-rose-500 text-white rounded-full shadow">
+      Buka Undangan
+    </button>
+  </div>
+</section>
+
+<!-- 💍 ISI UNDANGAN -->
+<main id="content" class="hidden">
+
+  <!-- PASANGAN -->
+  <section class="py-16 text-center px-6">
+    <h2 class="text-3xl mb-4">Assalamu’alaikum</h2>
+    <p class="max-w-xl mx-auto">
+      Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan
+      pernikahan putra-putri kami.
+    </p>
+  </section>
+
+  <!-- NAMA -->
+  <section class="py-16 bg-white/70 text-center">
+    <h2 class="text-4xl mb-4">Ahmad</h2>
+    <p class="mb-8">&</p>
+    <h2 class="text-4xl">Aisyah</h2>
+  </section>
+
+  <!-- WAKTU -->
+  <section class="py-16 text-center px-6">
+    <h3 class="text-2xl mb-4">Akad & Resepsi</h3>
+    <p>Sabtu, 20 April 2026</p>
+    <p>10.00 WIB – Selesai</p>
+    <p class="mt-2">Jakarta</p>
+
+    <!-- COUNTDOWN -->
+    <div id="countdown" class="mt-8 text-xl font-semibold"></div>
+  </section>
+
+  <!-- PENUTUP -->
+  <section class="py-16 bg-rose-100 text-center px-6">
+    <p>
+      Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
+      berkenan hadir.
+    </p>
+    <p class="mt-4">Wassalamu’alaikum Wr. Wb.</p>
+  </section>
+
+</main>
+
+<!-- 🌸 JAVASCRIPT -->
+<script>
+function openInvitation() {
+  document.getElementById("cover").classList.add("hidden");
+  document.getElementById("content").classList.remove("hidden");
+}
+
+function startCountdown() {
+  const eventDate = new Date("2026-04-20T10:00:00").getTime();
+  const el = document.getElementById("countdown");
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const d = eventDate - now;
+
+    if (d < 0) {
+      el.innerHTML = "Acara sedang berlangsung";
+      return;
+    }
+
+    const days = Math.floor(d / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((d / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((d / (1000 * 60)) % 60);
+
+    el.innerHTML = `${days} hari ${hours} jam ${minutes} menit`;
+  }, 1000);
+}
+
+function createPetals() {
+  for (let i = 0; i < 15; i++) {
+    const petal = document.createElement("div");
+    petal.className = "petal";
+    petal.innerHTML = "🌸";
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.animationDuration = 5 + Math.random() * 5 + "s";
+    petal.style.fontSize = 16 + Math.random() * 20 + "px";
+    document.body.appendChild(petal);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  startCountdown();
+  createPetals();
+});
+</script>
+
+</body>
+</html>
