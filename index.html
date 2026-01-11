@@ -1,133 +1,859 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Undangan Pernikahan</title>
-
-  <!-- Tailwind CDN -->
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Playfair Display', serif; }
-    .petal {
-      position: fixed;
-      top: -10%;
-      animation: fall linear infinite;
-      opacity: 0.8;
+    body {
+      box-sizing: border-box;
     }
-    @keyframes fall {
+    
+    .font-script {
+      font-family: 'Great Vibes', cursive;
+    }
+    
+    .font-serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    
+    .font-sans {
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
       to {
-        transform: translateY(120vh) rotate(360deg);
+        opacity: 1;
+        transform: translateY(0);
       }
     }
-  </style>
-</head>
-
-<body class="bg-rose-50 text-gray-800 overflow-x-hidden">
-
-<!-- 🌸 COVER -->
-<section id="cover" class="min-h-screen flex items-center justify-center bg-rose-100 text-center px-6">
-  <div>
-    <p class="text-lg mb-4">Undangan Pernikahan</p>
-    <h1 class="text-4xl md:text-5xl font-semibold mb-6">
-      Ahmad & Aisyah
-    </h1>
-    <button onclick="openInvitation()" class="px-6 py-3 bg-rose-500 text-white rounded-full shadow">
-      Buka Undangan
-    </button>
-  </div>
-</section>
-
-<!-- 💍 ISI UNDANGAN -->
-<main id="content" class="hidden">
-
-  <!-- PASANGAN -->
-  <section class="py-16 text-center px-6">
-    <h2 class="text-3xl mb-4">Assalamu’alaikum</h2>
-    <p class="max-w-xl mx-auto">
-      Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan
-      pernikahan putra-putri kami.
-    </p>
-  </section>
-
-  <!-- NAMA -->
-  <section class="py-16 bg-white/70 text-center">
-    <h2 class="text-4xl mb-4">Ahmad</h2>
-    <p class="mb-8">&</p>
-    <h2 class="text-4xl">Aisyah</h2>
-  </section>
-
-  <!-- WAKTU -->
-  <section class="py-16 text-center px-6">
-    <h3 class="text-2xl mb-4">Akad & Resepsi</h3>
-    <p>Sabtu, 20 April 2026</p>
-    <p>10.00 WIB – Selesai</p>
-    <p class="mt-2">Jakarta</p>
-
-    <!-- COUNTDOWN -->
-    <div id="countdown" class="mt-8 text-xl font-semibold"></div>
-  </section>
-
-  <!-- PENUTUP -->
-  <section class="py-16 bg-rose-100 text-center px-6">
-    <p>
-      Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
-      berkenan hadir.
-    </p>
-    <p class="mt-4">Wassalamu’alaikum Wr. Wb.</p>
-  </section>
-
-</main>
-
-<!-- 🌸 JAVASCRIPT -->
-<script>
-function openInvitation() {
-  document.getElementById("cover").classList.add("hidden");
-  document.getElementById("content").classList.remove("hidden");
-}
-
-function startCountdown() {
-  const eventDate = new Date("2026-04-20T10:00:00").getTime();
-  const el = document.getElementById("countdown");
-
-  setInterval(() => {
-    const now = new Date().getTime();
-    const d = eventDate - now;
-
-    if (d < 0) {
-      el.innerHTML = "Acara sedang berlangsung";
-      return;
+    
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
     }
-
-    const days = Math.floor(d / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((d / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((d / (1000 * 60)) % 60);
-
-    el.innerHTML = `${days} hari ${hours} jam ${minutes} menit`;
-  }, 1000);
-}
-
-function createPetals() {
-  for (let i = 0; i < 15; i++) {
-    const petal = document.createElement("div");
-    petal.className = "petal";
-    petal.innerHTML = "🌸";
-    petal.style.left = Math.random() * 100 + "vw";
-    petal.style.animationDuration = 5 + Math.random() * 5 + "s";
-    petal.style.fontSize = 16 + Math.random() * 20 + "px";
-    document.body.appendChild(petal);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  startCountdown();
-  createPetals();
-});
-</script>
-
-</body>
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes heart-beat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.1); }
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .animate-pulse-soft {
+      animation: pulse-soft 2s ease-in-out infinite;
+    }
+    
+    .animate-sparkle {
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    .animate-heart-beat {
+      animation: heart-beat 1.5s ease-in-out infinite;
+    }
+    
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-700 { animation-delay: 0.7s; }
+    .delay-1000 { animation-delay: 1s; }
+    
+    .bg-gradient-pink {
+      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 50%, #f48fb1 100%);
+    }
+    
+    .bg-gradient-pink-soft {
+      background: linear-gradient(180deg, #fff5f8 0%, #fce4ec 100%);
+    }
+    
+    .text-pink-gold {
+      background: linear-gradient(135deg, #d4145a 0%, #fbb03b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .scrollbar-hidden::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .scrollbar-hidden {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    .petal {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(135deg, #f8bbd9 0%, #f48fb1 100%);
+      border-radius: 50% 0 50% 50%;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    
+    @keyframes fall {
+      0% {
+        transform: translateY(-100%) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100%) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #f48fb1, transparent);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full font-sans text-gray-700 overflow-x-hidden"><!-- Floating Petals Container -->
+  <div id="petals-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div><!-- Cover Page -->
+  <div id="cover-page" class="fixed inset-0 z-40 bg-gradient-pink flex items-center justify-center">
+   <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-10 left-10 w-32 h-32 bg-white/20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-10 w-40 h-40 bg-pink-300/30 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/4 w-24 h-24 bg-pink-200/40 rounded-full blur-2xl"></div>
+   </div>
+   <div class="relative text-center px-6 max-w-md w-full"><!-- Decorative Top -->
+    <div class="mb-6 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards;">
+     <svg class="w-20 h-20 mx-auto text-pink-600/70" viewbox="0 0 100 100" fill="currentColor"><path d="M50 20c-15-20-50-10-40 25 5 18 40 35 40 35s35-17 40-35c10-35-25-45-40-25z" />
+     </svg>
+    </div><!-- The Wedding Of -->
+    <p class="font-serif italic text-pink-700 text-lg tracking-widest mb-4 animate-fade-in-up opacity-0 delay-100" style="animation-fill-mode: forwards;">The Wedding Of</p><!-- Bride Name -->
+    <h1 id="cover-bride" class="font-script text-4xl md:text-5xl text-pink-800 mb-3 animate-fade-in-up opacity-0 delay-200" style="animation-fill-mode: forwards;">Masrotul Isnia Agustin</h1><!-- Ring Icon -->
+    <div class="my-4 animate-fade-in-up opacity-0 delay-300 animate-float" style="animation-fill-mode: forwards;">
+     <svg class="w-12 h-12 mx-auto text-yellow-600" viewbox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><circle cx="35" cy="50" r="20" /> <circle cx="65" cy="50" r="20" /> <circle cx="35" cy="50" r="12" fill="currentColor" opacity="0.2" /> <circle cx="65" cy="50" r="12" fill="currentColor" opacity="0.2" /> <circle cx="35" cy="42" r="3" fill="currentColor" /> <circle cx="65" cy="42" r="3" fill="currentColor" />
+     </svg>
+    </div><!-- Groom Name -->
+    <h1 id="cover-groom" class="font-script text-4xl md:text-5xl text-pink-800 mb-8 animate-fade-in-up opacity-0 delay-400" style="animation-fill-mode: forwards;">Mustofa Adi Sukma</h1><!-- Guest Section -->
+    <div class="glass-card rounded-2xl p-6 mt-6 animate-fade-in-up opacity-0 delay-500" style="animation-fill-mode: forwards;">
+     <p class="font-serif text-pink-700 text-sm mb-2">Kepada Yth.</p>
+     <p class="font-serif text-pink-700 text-sm mb-3">Bapak/Ibu/Saudara/i :</p>
+     <div id="guest-display" class="hidden mb-4">
+      <p id="guest-name-display" class="font-script text-2xl text-pink-800"></p>
+     </div>
+     <div id="guest-input-section"><input type="text" id="guest-name-input" placeholder="Masukkan Nama Lengkap" class="w-full px-4 py-3 rounded-full border-2 border-pink-300 focus:border-pink-500 focus:outline-none text-center font-serif text-pink-700 bg-white/80 mb-4">
+     </div>
+     <p class="text-xs text-pink-500/80 italic mb-4">Mohon maaf apabila ada kesalahan dalam penulisan nama, gelar, alamat</p><button id="open-invitation-btn" onclick="openInvitation()" class="w-full py-3 px-6 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
+      </svg> Buka Undangan </button>
+    </div>
+   </div>
+  </div><!-- Main Content -->
+  <div id="main-content" class="hidden h-full overflow-y-auto scrollbar-hidden bg-gradient-pink-soft"><!-- Section 1: Hero -->
+   <section class="min-h-full flex items-center justify-center py-16 px-4 relative">
+    <div class="absolute inset-0 overflow-hidden">
+     <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-pink-200/50 to-transparent"></div>
+     <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-pink-200/50 to-transparent"></div>
+    </div>
+    <div class="text-center relative z-10">
+     <p class="font-serif italic text-pink-600 tracking-widest mb-4 animate-fade-in-up">The Wedding Of</p>
+     <div class="mb-6">
+      <svg class="w-24 h-24 mx-auto text-pink-400 animate-heart-beat" viewbox="0 0 100 100" fill="currentColor"><path d="M50 88c-2 0-4-1-5-2C30 72 10 55 10 35c0-14 11-25 25-25 8 0 15 4 15 4s7-4 15-4c14 0 25 11 25 25 0 20-20 37-35 51-1 1-3 2-5 2z" />
+      </svg>
+     </div>
+     <h1 id="hero-bride" class="font-script text-5xl md:text-6xl text-pink-800 mb-2">Masrotul Isnia Agustin</h1>
+     <div class="flex items-center justify-center gap-4 my-4">
+      <div class="h-px w-16 bg-pink-400"></div><span class="font-script text-3xl text-yellow-600">&amp;</span>
+      <div class="h-px w-16 bg-pink-400"></div>
+     </div>
+     <h1 id="hero-groom" class="font-script text-5xl md:text-6xl text-pink-800 mb-8">Mustofa Adi Sukma</h1>
+     <div class="glass-card inline-block px-8 py-4 rounded-full mb-6">
+      <p class="font-serif text-pink-700 text-lg">Rabu, 21 Januari 2026</p>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider mx-8"></div><!-- Section 2: Love Story -->
+   <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-script text-4xl text-pink-800 mb-2">Asmaraloka</h2>
+      <p class="font-serif italic text-pink-600">Perjalanan Cinta Kami</p>
+     </div>
+     <div class="relative"><!-- Decorative Background -->
+      <div class="absolute inset-0 opacity-10 pointer-events-none">
+       <div class="absolute top-0 left-0 w-40 h-40 bg-pink-300 rounded-full blur-3xl"></div>
+       <div class="absolute bottom-0 right-0 w-40 h-40 bg-pink-200 rounded-full blur-3xl"></div>
+      </div>
+      <div class="glass-card rounded-3xl p-8 relative z-10 border-2 border-pink-200/50 shadow-2xl"><!-- Opening Quote with Animation -->
+       <div class="text-center mb-8 animate-fade-in-up">
+        <svg class="w-12 h-12 mx-auto text-pink-400 mb-4 animate-float" viewbox="0 0 24 24" fill="currentColor"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-4.716-5-7-5m14 0c-3 0-7 3.75-7 5v8c0 7 4 8 7 8s4-1 4-8V5c1.042-4.271 4.04-6.348 7-6.348m0 0c3.5 0 6 3 6 7v10c0 4-2.692 7-6 7s-6-3-6-7V4c0-4.306 3-7 6-7z" />
+        </svg>
+        <p class="font-serif italic text-pink-600 text-lg">Terlalu panjang jika diceritakan dari permulaan...</p>
+       </div><!-- Story Content with Staggered Animation -->
+       <div class="space-y-6 text-gray-700 leading-relaxed font-serif text-sm"><!-- Para 1 -->
+        <div class="animate-fade-in-up delay-100 opacity-0 bg-gradient-to-r from-pink-50 to-transparent p-6 rounded-2xl" style="animation-fill-mode: forwards;">
+         <p class="text-gray-600">Pada intinya kita hanya sepasang yang ditakdirkan bersama melalui pertemuan yang tak terencanakan. Melewati badai maupun pelangi hingga berhasil sampai pada dititik ini.</p>
+        </div><!-- Para 2 -->
+        <div class="animate-fade-in-up delay-200 opacity-0 bg-gradient-to-l from-pink-50 to-transparent p-6 rounded-2xl" style="animation-fill-mode: forwards;">
+         <p class="text-gray-600">Setitik kepercayaan yang terbawa oleh waktu mampu membangun sebuah komitmen. Menjadikan sebuah alasan tanpa keraguan bagaimana kata "yakin" itu pada akhirnya terucap untuk mengokohkan hati kami.</p>
+        </div><!-- Para 3 -->
+        <div class="animate-fade-in-up delay-300 opacity-0 bg-gradient-to-r from-pink-50 to-transparent p-6 rounded-2xl" style="animation-fill-mode: forwards;">
+         <p class="text-gray-600">Bukan hanya kata-kata yang tak menjelma aksi. Perlahan setiap kata janji mulai terealisasikan. Segala pengorbanan telah menjadi reaksi hingga pada <strong class="text-pink-700">"27 Desember 2025"</strong>.. kita mempertemukan dua keluarga kami.</p>
+        </div><!-- Para 4 - Main -->
+        <div class="animate-fade-in-up delay-400 opacity-0 bg-gradient-to-b from-pink-100 to-pink-50 p-6 rounded-2xl border-l-4 border-pink-500" style="animation-fill-mode: forwards;">
+         <p class="text-gray-700 font-medium">Tidak semudah atau setenang yang terlihat. Sejatinya kita hanya berharap dan memasrahkan diri kepada Sang Maha Cinta. Lantunan doa terus bergemuruh memenuhi langit pada setiap sujud terendah di bumi, berharap dimudahkan jalannya. Hingga terbitlah hari dimana semesta memberikan jawaban. Hari dimana kami diberi kesempatan untuk mengikrarkan sebuah perjanjian yang kokoh nan abadi kepada Allah SWT.</p>
+        </div><!-- Para 5 - Closing -->
+        <div class="animate-fade-in-up delay-500 opacity-0 bg-gradient-to-l from-pink-50 to-transparent p-6 rounded-2xl" style="animation-fill-mode: forwards;">
+         <p class="text-gray-600"><strong class="text-pink-700">"20 Januari 2026"</strong>.. akan menjadi awal yang bahagia dari ibadah terpanjang kami. Doakan kami agar takdir senantiasa berlemah lembut kepada kisah kami.</p>
+        </div><!-- Signature -->
+        <div class="animate-fade-in-up delay-700 opacity-0 pt-8 border-t-2 border-pink-200" style="animation-fill-mode: forwards;">
+         <div class="flex items-center justify-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-full bg-pink-300 animate-pulse-soft"></div>
+          <svg class="w-6 h-6 text-pink-500 animate-heart-beat" viewbox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          <div class="w-8 h-8 rounded-full bg-pink-300 animate-pulse-soft"></div>
+         </div>
+         <p class="text-center text-pink-700 font-script text-xl">–Mustofa &amp; Nia–</p>
+         <p class="text-center text-xs text-pink-500 mt-2">20 Januari 2026</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider mx-8"></div><!-- Section 3: Bride & Groom Info -->
+   <section class="py-16 px-4 bg-white/50">
+    <div class="max-w-3xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-script text-4xl text-pink-800 mb-2">Mempelai</h2>
+      <p class="font-serif italic text-pink-600">Calon Pengantin</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-8"><!-- Bride -->
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-300 to-pink-500 flex items-center justify-center shadow-lg">
+        <svg class="w-20 h-20 text-white" viewbox="0 0 100 100" fill="currentColor"><circle cx="50" cy="30" r="18" /> <path d="M50 52c-20 0-35 12-35 28v5h70v-5c0-16-15-28-35-28z" /> <path d="M35 25c0-15 30-15 30 0" fill="none" stroke="currentColor" stroke-width="3" />
+        </svg>
+       </div>
+       <h3 id="info-bride" class="font-script text-3xl text-pink-800 mb-2">Masrotul Isnia Agustin</h3>
+       <p class="font-serif text-pink-600 mb-4">Putri Kedua dari</p>
+       <p class="text-gray-600 text-sm">Bapak Samai</p>
+       <p class="text-gray-600 text-sm">&amp;</p>
+       <p class="text-gray-600 text-sm">Ibu Roikah</p>
+       <p class="text-gray-600 text-xs mt-2">(Sumbergedang - Pandaan)</p>
+       <div class="mt-4 flex justify-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-500">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+         </svg>
+        </div>
+       </div>
+      </div><!-- Groom -->
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-300 to-blue-500 flex items-center justify-center shadow-lg">
+        <svg class="w-20 h-20 text-white" viewbox="0 0 100 100" fill="currentColor"><circle cx="50" cy="30" r="18" /> <path d="M50 52c-20 0-35 12-35 28v5h70v-5c0-16-15-28-35-28z" /> <rect x="42" y="52" width="16" height="25" rx="2" /> <path d="M50 52l-5 8h10l-5-8z" />
+        </svg>
+       </div>
+       <h3 id="info-groom" class="font-script text-3xl text-pink-800 mb-2">Mustofa Adi Sukma</h3>
+       <p class="font-serif text-pink-600 mb-4">Putra Pertama dari</p>
+       <p class="text-gray-600 text-sm">Bapak Sutaji</p>
+       <p class="text-gray-600 text-sm">&amp;</p>
+       <p class="text-gray-600 text-sm">Ibu Ciani Ulfa</p>
+       <p class="text-gray-600 text-xs mt-2">(Jatiarjo - Prigen)</p>
+       <div class="mt-4 flex justify-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+         </svg>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider mx-8"></div><!-- Section 4: Event Info -->
+   <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-script text-4xl text-pink-800 mb-2">Waktu &amp; Tempat</h2>
+      <p class="font-serif italic text-pink-600">Informasi Acara</p>
+     </div>
+     <div class="space-y-6"><!-- Akad -->
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-pink-500 flex items-center justify-center">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+       </div>
+       <h3 class="font-serif text-2xl text-pink-800 mb-4">Akad Nikah</h3>
+       <div class="space-y-2 text-gray-600">
+        <p class="flex items-center justify-center gap-2">
+         <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+         </svg><span id="akad-date">Selasa, 20 Januari 2026</span></p>
+        <p class="flex items-center justify-center gap-2">
+         <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg><span>Pukul 08:00 WIB</span></p>
+       </div>
+      </div><!-- Resepsi -->
+      <div class="glass-card rounded-3xl p-8 text-center">
+       <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-yellow-500 flex items-center justify-center">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+        </svg>
+       </div>
+       <h3 class="font-serif text-2xl text-pink-800 mb-4">Resepsi</h3>
+       <div class="space-y-2 text-gray-600">
+        <p class="flex items-center justify-center gap-2">
+         <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+         </svg><span id="resepsi-date">Rabu, 21 Januari 2026</span></p>
+        <p class="flex items-center justify-center gap-2">
+         <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg><span>Jam Bebas</span></p>
+       </div>
+      </div><!-- Countdown -->
+      <div class="glass-card rounded-3xl p-8 text-center bg-gradient-to-br from-pink-500 to-pink-600 text-white">
+       <h3 class="font-serif text-xl mb-6">Menghitung Hari</h3>
+       <div id="countdown" class="grid grid-cols-4 gap-4">
+        <div class="bg-white/20 rounded-xl p-3">
+         <div id="days" class="font-bold text-3xl">
+          00
+         </div>
+         <div class="text-xs uppercase tracking-wide">
+          Hari
+         </div>
+        </div>
+        <div class="bg-white/20 rounded-xl p-3">
+         <div id="hours" class="font-bold text-3xl">
+          00
+         </div>
+         <div class="text-xs uppercase tracking-wide">
+          Jam
+         </div>
+        </div>
+        <div class="bg-white/20 rounded-xl p-3">
+         <div id="minutes" class="font-bold text-3xl">
+          00
+         </div>
+         <div class="text-xs uppercase tracking-wide">
+          Menit
+         </div>
+        </div>
+        <div class="bg-white/20 rounded-xl p-3">
+         <div id="seconds" class="font-bold text-3xl">
+          00
+         </div>
+         <div class="text-xs uppercase tracking-wide">
+          Detik
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider mx-8"></div><!-- Section 5: Wishes/Prayer -->
+   <section class="py-16 px-4 bg-white/50">
+    <div class="max-w-2xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-script text-4xl text-pink-800 mb-2">Doa &amp; Ucapan</h2>
+      <p class="font-serif italic text-pink-600">Kirimkan Doa Terbaik Anda</p>
+     </div>
+     <div class="glass-card rounded-3xl p-8">
+      <form id="wish-form" onsubmit="submitWish(event)">
+       <div class="mb-4"><label class="block font-serif text-pink-700 mb-2 text-sm">Nama Anda</label> <input type="text" id="wish-name" readonly class="w-full px-4 py-3 rounded-xl border-2 border-pink-200 focus:border-pink-500 focus:outline-none bg-pink-50/50 text-gray-700">
+       </div>
+       <div class="mb-4"><label class="block font-serif text-pink-700 mb-2 text-sm">Doa &amp; Ucapan</label> <textarea id="wish-message" rows="4" placeholder="Tulis doa dan ucapan terbaik Anda..." class="w-full px-4 py-3 rounded-xl border-2 border-pink-200 focus:border-pink-500 focus:outline-none bg-pink-50/50 text-gray-700 resize-none"></textarea>
+       </div><button type="submit" id="wish-submit-btn" class="w-full py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"> Kirim Ucapan </button>
+      </form><!-- Wishes List -->
+      <div class="mt-8">
+       <h4 class="font-serif text-pink-700 mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg> Ucapan (<span id="wish-count">0</span>)</h4>
+       <div id="wishes-container" class="space-y-4 max-h-64 overflow-y-auto scrollbar-hidden"><!-- Wishes will be inserted here -->
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider mx-8"></div><!-- Section 6: RSVP -->
+   <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-script text-4xl text-pink-800 mb-2">Konfirmasi Kehadiran</h2>
+      <p class="font-serif italic text-pink-600">RSVP</p>
+     </div>
+     <div class="glass-card rounded-3xl p-8">
+      <div class="text-center mb-8">
+       <div class="inline-flex items-center gap-3 bg-pink-100 px-6 py-3 rounded-full">
+        <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg><span class="font-serif text-pink-700">Total Konfirmasi: <strong id="total-rsvp">0</strong></span>
+       </div>
+      </div>
+      <form id="rsvp-form" onsubmit="submitRSVP(event)">
+       <div class="mb-4"><label class="block font-serif text-pink-700 mb-2 text-sm">Nama Anda</label> <input type="text" id="rsvp-name" readonly class="w-full px-4 py-3 rounded-xl border-2 border-pink-200 focus:border-pink-500 focus:outline-none bg-pink-50/50 text-gray-700">
+       </div>
+       <div class="mb-6"><label class="block font-serif text-pink-700 mb-3 text-sm">Konfirmasi Kehadiran</label>
+        <div class="grid grid-cols-2 gap-4"><label class="relative cursor-pointer"> <input type="radio" name="attendance" value="hadir" class="peer hidden">
+          <div class="px-4 py-4 rounded-xl border-2 border-pink-200 text-center transition-all peer-checked:border-green-500 peer-checked:bg-green-50 hover:border-pink-400">
+           <svg class="w-8 h-8 mx-auto mb-2 text-green-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg><span class="font-medium text-gray-700">Hadir</span>
+          </div></label> <label class="relative cursor-pointer"> <input type="radio" name="attendance" value="tidak_hadir" class="peer hidden">
+          <div class="px-4 py-4 rounded-xl border-2 border-pink-200 text-center transition-all peer-checked:border-red-500 peer-checked:bg-red-50 hover:border-pink-400">
+           <svg class="w-8 h-8 mx-auto mb-2 text-red-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg><span class="font-medium text-gray-700">Tidak Hadir</span>
+          </div></label>
+        </div>
+       </div><button type="submit" id="rsvp-submit-btn" class="w-full py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"> Konfirmasi </button>
+      </form><!-- RSVP Stats -->
+      <div class="mt-8 grid grid-cols-2 gap-4">
+       <div class="bg-green-50 rounded-xl p-4 text-center">
+        <div class="text-2xl font-bold text-green-600" id="hadir-count">
+         0
+        </div>
+        <div class="text-sm text-green-700">
+         Akan Hadir
+        </div>
+       </div>
+       <div class="bg-red-50 rounded-xl p-4 text-center">
+        <div class="text-2xl font-bold text-red-600" id="tidak-hadir-count">
+         0
+        </div>
+        <div class="text-sm text-red-700">
+         Tidak Hadir
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div class="section-divider mx-8"></div><!-- Section 7: Location -->
+   <section class="py-16 px-4 bg-white/50">
+    <div class="max-w-2xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="font-script text-4xl text-pink-800 mb-2">Lokasi</h2>
+      <p class="font-serif italic text-pink-600">Tempat Acara</p>
+     </div>
+     <div class="glass-card rounded-3xl p-8 text-center">
+      <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+       <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+       </svg>
+      </div>
+      <h3 id="venue-name" class="font-serif text-2xl text-pink-800 mb-4">Kediaman Mempelai Wanita</h3>
+      <p class="text-gray-600 mb-6">Dsn. Buluresik<br>
+       Ds. Sumbergedang<br>
+       Pandaan - Pasuruan<br>
+       Indonesia</p><!-- Map Placeholder -->
+      <div class="bg-pink-100 rounded-2xl h-48 flex items-center justify-center mb-6 relative overflow-hidden">
+       <div class="absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300"></div>
+       <div class="relative z-10 text-center">
+        <svg class="w-16 h-16 mx-auto text-pink-500 mb-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+        </svg>
+        <p class="text-pink-600 font-serif">Lokasi Acara</p>
+       </div>
+      </div><a href="https://maps.app.goo.gl/pd99LBTYujDSghWx5" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full font-medium shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+       </svg> Buka Maps </a>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-12 px-4 text-center bg-gradient-to-t from-pink-200 to-transparent">
+    <div class="mb-6">
+     <svg class="w-12 h-12 mx-auto text-pink-500 animate-heart-beat" viewbox="0 0 100 100" fill="currentColor"><path d="M50 88c-2 0-4-1-5-2C30 72 10 55 10 35c0-14 11-25 25-25 8 0 15 4 15 4s7-4 15-4c14 0 25 11 25 25 0 20-20 37-35 51-1 1-3 2-5 2z" />
+     </svg>
+    </div>
+    <p class="font-script text-3xl text-pink-800 mb-2">Terima Kasih</p>
+    <p class="font-serif text-pink-600 mb-4">Atas Doa &amp; Restunya</p>
+    <div class="flex items-center justify-center gap-2 text-pink-500">
+     <div class="h-px w-12 bg-pink-400"></div><span class="font-script text-xl">&amp;</span>
+     <div class="h-px w-12 bg-pink-400"></div>
+    </div>
+    <p id="footer-names" class="font-script text-2xl text-pink-700 mt-4">Nia &amp; Mustofa</p>
+    <p class="text-xs text-pink-400 mt-6">© 2026 Movin Printing</p>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      bride_name: 'Masrotul Isnia Agustin',
+      groom_name: 'Mustofa Adi Sukma',
+      wedding_date: 'Selasa, 20 Januari 2026',
+      venue_name: 'Kediaman Mempelai Wanita',
+      background_color: '#fce4ec',
+      surface_color: '#ffffff',
+      text_color: '#4a5568',
+      primary_action_color: '#ec4899',
+      secondary_action_color: '#f472b6'
+    };
+    
+    let config = { ...defaultConfig };
+    let guestName = '';
+    let allData = [];
+    
+    // Data Handler for SDK
+    const dataHandler = {
+      onDataChanged(data) {
+        allData = data;
+        updateWishesDisplay();
+        updateRSVPStats();
+      }
+    };
+    
+    // Initialize SDKs
+    async function initApp() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            updateUI();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+              },
+              {
+                get: () => cfg.surface_color || defaultConfig.surface_color,
+                set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+              },
+              {
+                get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+                set: (v) => { cfg.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); }
+              },
+              {
+                get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+                set: (v) => { cfg.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['bride_name', cfg.bride_name || defaultConfig.bride_name],
+            ['groom_name', cfg.groom_name || defaultConfig.groom_name],
+            ['wedding_date', cfg.wedding_date || defaultConfig.wedding_date],
+            ['venue_name', cfg.venue_name || defaultConfig.venue_name]
+          ])
+        });
+        config = { ...defaultConfig, ...window.elementSdk.config };
+      }
+      
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize data SDK');
+        }
+      }
+      
+      updateUI();
+      startCountdown();
+      createPetals();
+    }
+    
+    function updateUI() {
+      const brideName = config.bride_name || defaultConfig.bride_name;
+      const groomName = config.groom_name || defaultConfig.groom_name;
+      const weddingDate = config.wedding_date || defaultConfig.wedding_date;
+      const venueName = config.venue_name || defaultConfig.venue_name;
+      
+      // Update all name displays
+      const coverBride = document.getElementById('cover-bride');
+      const coverGroom = document.getElementById('cover-groom');
+      const heroBride = document.getElementById('hero-bride');
+      const heroGroom = document.getElementById('hero-groom');
+      const infoBride = document.getElementById('info-bride');
+      const infoGroom = document.getElementById('info-groom');
+      const footerNames = document.getElementById('footer-names');
+      
+      if (coverBride) coverBride.textContent = brideName;
+      if (coverGroom) coverGroom.textContent = groomName;
+      if (heroBride) heroBride.textContent = brideName;
+      if (heroGroom) heroGroom.textContent = groomName;
+      if (infoBride) infoBride.textContent = brideName;
+      if (infoGroom) infoGroom.textContent = groomName;
+      if (footerNames) footerNames.textContent = `${brideName.split(' ')[0]} & ${groomName.split(' ')[0]}`;
+      
+      // Update dates
+      const heroDate = document.getElementById('hero-date');
+      const akadDate = document.getElementById('akad-date');
+      const resepsiDate = document.getElementById('resepsi-date');
+      
+      if (heroDate) heroDate.textContent = weddingDate;
+      if (akadDate) akadDate.textContent = weddingDate;
+      if (resepsiDate) resepsiDate.textContent = weddingDate;
+      
+      // Update venue
+      const venueEl = document.getElementById('venue-name');
+      if (venueEl) venueEl.textContent = venueName;
+    }
+    
+    function openInvitation() {
+      const nameInput = document.getElementById('guest-name-input');
+      const name = nameInput.value.trim();
+      
+      if (!name) {
+        nameInput.classList.add('border-red-400');
+        nameInput.placeholder = 'Mohon masukkan nama Anda';
+        return;
+      }
+      
+      guestName = name;
+      
+      // Show guest name on cover
+      document.getElementById('guest-input-section').classList.add('hidden');
+      document.getElementById('guest-display').classList.remove('hidden');
+      document.getElementById('guest-name-display').textContent = guestName;
+      
+      // Populate form fields
+      document.getElementById('wish-name').value = guestName;
+      document.getElementById('rsvp-name').value = guestName;
+      
+      // Animate cover away
+      setTimeout(() => {
+        const coverPage = document.getElementById('cover-page');
+        coverPage.style.transition = 'all 0.8s ease-out';
+        coverPage.style.opacity = '0';
+        coverPage.style.transform = 'translateY(-100%)';
+        
+        setTimeout(() => {
+          coverPage.classList.add('hidden');
+          document.getElementById('main-content').classList.remove('hidden');
+        }, 800);
+      }, 500);
+    }
+    
+    function startCountdown() {
+      const weddingDate = new Date('2026-01-21T23:59:59');
+      
+      function updateCountdown() {
+        const now = new Date();
+        const diff = weddingDate - now;
+        
+        if (diff > 0) {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          
+          document.getElementById('days').textContent = String(days).padStart(2, '0');
+          document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+          document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+          document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+      }
+      
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+    
+    function createPetals() {
+      const container = document.getElementById('petals-container');
+      
+      function createPetal() {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        petal.style.animation = `fall ${Math.random() * 3 + 4}s linear forwards`;
+        container.appendChild(petal);
+        
+        setTimeout(() => petal.remove(), 7000);
+      }
+      
+      setInterval(createPetal, 800);
+    }
+    
+    async function submitWish(event) {
+      event.preventDefault();
+      
+      const message = document.getElementById('wish-message').value.trim();
+      if (!message) return;
+      
+      if (allData.length >= 999) {
+        showToast('Batas maksimum ucapan tercapai');
+        return;
+      }
+      
+      const btn = document.getElementById('wish-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Mengirim...';
+      
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create({
+          guest_name: guestName,
+          attendance: '',
+          message: message,
+          created_at: new Date().toISOString()
+        });
+        
+        if (result.isOk) {
+          document.getElementById('wish-message').value = '';
+          showToast('Ucapan berhasil dikirim!');
+        } else {
+          showToast('Gagal mengirim ucapan');
+        }
+      }
+      
+      btn.disabled = false;
+      btn.textContent = 'Kirim Ucapan';
+    }
+    
+    async function submitRSVP(event) {
+      event.preventDefault();
+      
+      const attendance = document.querySelector('input[name="attendance"]:checked');
+      if (!attendance) {
+        showToast('Pilih konfirmasi kehadiran');
+        return;
+      }
+      
+      if (allData.length >= 999) {
+        showToast('Batas maksimum konfirmasi tercapai');
+        return;
+      }
+      
+      const btn = document.getElementById('rsvp-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Mengirim...';
+      
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create({
+          guest_name: guestName,
+          attendance: attendance.value,
+          message: '',
+          created_at: new Date().toISOString()
+        });
+        
+        if (result.isOk) {
+          showToast('Konfirmasi berhasil!');
+        } else {
+          showToast('Gagal mengirim konfirmasi');
+        }
+      }
+      
+      btn.disabled = false;
+      btn.textContent = 'Konfirmasi';
+    }
+    
+    function updateWishesDisplay() {
+      const container = document.getElementById('wishes-container');
+      const countEl = document.getElementById('wish-count');
+      
+      const wishes = allData.filter(d => d.message && d.message.trim());
+      countEl.textContent = wishes.length;
+      
+      const existingItems = new Map([...container.children].map(el => [el.dataset.id, el]));
+      
+      wishes.slice().reverse().forEach(wish => {
+        const id = wish.__backendId;
+        if (existingItems.has(id)) {
+          existingItems.delete(id);
+        } else {
+          const wishEl = document.createElement('div');
+          wishEl.dataset.id = id;
+          wishEl.className = 'bg-pink-50 rounded-xl p-4';
+          wishEl.innerHTML = `
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-full bg-pink-200 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-pink-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <p class="font-medium text-pink-800 text-sm">${escapeHtml(wish.guest_name)}</p>
+                <p class="text-gray-600 text-sm mt-1">${escapeHtml(wish.message)}</p>
+                <p class="text-xs text-pink-400 mt-2">${formatDate(wish.created_at)}</p>
+              </div>
+            </div>
+          `;
+          container.insertBefore(wishEl, container.firstChild);
+        }
+      });
+      
+      existingItems.forEach(el => el.remove());
+    }
+    
+    function updateRSVPStats() {
+      const totalEl = document.getElementById('total-rsvp');
+      const hadirEl = document.getElementById('hadir-count');
+      const tidakHadirEl = document.getElementById('tidak-hadir-count');
+      
+      const rsvps = allData.filter(d => d.attendance);
+      const hadir = rsvps.filter(d => d.attendance === 'hadir').length;
+      const tidakHadir = rsvps.filter(d => d.attendance === 'tidak_hadir').length;
+      
+      totalEl.textContent = rsvps.length;
+      hadirEl.textContent = hadir;
+      tidakHadirEl.textContent = tidakHadir;
+    }
+    
+    function showToast(message) {
+      const existing = document.querySelector('.toast-message');
+      if (existing) existing.remove();
+      
+      const toast = document.createElement('div');
+      toast.className = 'toast-message fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white px-6 py-3 rounded-full shadow-lg z-50 animate-fade-in-up';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function formatDate(isoString) {
+      const date = new Date(isoString);
+      return date.toLocaleDateString('id-ID', { 
+        day: 'numeric', 
+        month: 'short', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    // Initialize app
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bc0731b5772e780',t:'MTc2ODA5MjkzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
